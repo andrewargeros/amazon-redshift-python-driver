@@ -173,6 +173,7 @@ class BrowserAzureOAuth2CredentialsProvider(JwtCredentialsProvider):
         if url is None:
             BrowserAzureOAuth2CredentialsProvider.handle_missing_required_property("login_url")
         self.validate_url(url)
+        print(url)
         browser = mechanicalsoup.StatefulBrowser(user_agent="AzureOauthConnection")
         browser.open(url)
 
