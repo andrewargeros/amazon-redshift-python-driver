@@ -1,6 +1,7 @@
 import logging
 import socket
 import typing
+import requests
 from enum import Enum
 
 from redshift_connector.error import InterfaceError
@@ -173,7 +174,8 @@ class BrowserAzureOAuth2CredentialsProvider(JwtCredentialsProvider):
         if url is None:
             BrowserAzureOAuth2CredentialsProvider.handle_missing_required_property("login_url")
         self.validate_url(url)
-        webbrowser.open(url)
+        # webbrowser.open(url)
+        requests.get(url)
 
     def get_listen_socket(self: "BrowserAzureOAuth2CredentialsProvider") -> socket.socket:
         """
