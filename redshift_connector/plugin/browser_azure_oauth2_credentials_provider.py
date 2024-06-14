@@ -1,7 +1,6 @@
 import logging
 import socket
 import typing
-import requests
 from enum import Enum
 
 from redshift_connector.error import InterfaceError
@@ -167,15 +166,15 @@ class BrowserAzureOAuth2CredentialsProvider(JwtCredentialsProvider):
         None
         """
         _logger.debug("BrowserAzureOAuth2CredentialsProvider.open_browser")
-        import webbrowser
+        import mechanicalsoup
 
         url: str = self.get_authorization_token_url(state=state)
 
         if url is None:
             BrowserAzureOAuth2CredentialsProvider.handle_missing_required_property("login_url")
         self.validate_url(url)
-        # webbrowser.open(url)
-        requests.get(url)
+        browser = mechanicalsoup.StatefulBrowser(user_agent="AzureOauthConnection")
+        browser.open(url)
 
     def get_listen_socket(self: "BrowserAzureOAuth2CredentialsProvider") -> socket.socket:
         """
